@@ -1,4 +1,6 @@
 class LessonsController < ApplicationController
+  before_filter :find_post, :only => [:show, :edit, :update, :destroy]
+  
   # GET /lessons
   # GET /lessons.xml
   def index
@@ -13,8 +15,6 @@ class LessonsController < ApplicationController
   # GET /lessons/1
   # GET /lessons/1.xml
   def show
-    @lesson = Lesson.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @lesson }
@@ -34,7 +34,6 @@ class LessonsController < ApplicationController
 
   # GET /lessons/1/edit
   def edit
-    @lesson = Lesson.find(params[:id])
   end
 
   # POST /lessons
@@ -56,8 +55,6 @@ class LessonsController < ApplicationController
   # PUT /lessons/1
   # PUT /lessons/1.xml
   def update
-    @lesson = Lesson.find(params[:id])
-
     respond_to do |format|
       if @lesson.update_attributes(params[:lesson])
         format.html { redirect_to(@lesson, :notice => 'Lesson was successfully updated.') }
@@ -72,7 +69,6 @@ class LessonsController < ApplicationController
   # DELETE /lessons/1
   # DELETE /lessons/1.xml
   def destroy
-    @lesson = Lesson.find(params[:id])
     @lesson.destroy
 
     respond_to do |format|
@@ -80,4 +76,10 @@ class LessonsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  protected    
+    def find_post
+      @lesson = Lesson.find(params[:id])
+    end
+  
 end
