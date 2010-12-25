@@ -1,5 +1,5 @@
 class LessonsController < ApplicationController
-  before_filter :find_post, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_lesson, :only => [:show, :edit, :update, :destroy]
   
   # GET /lessons
   # GET /lessons.xml
@@ -78,7 +78,7 @@ class LessonsController < ApplicationController
   end
   
   protected    
-    def find_post
+    def find_lesson
       @lesson = Lesson.find(params[:id])
     end
   

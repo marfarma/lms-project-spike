@@ -1,5 +1,6 @@
 Demo::Application.routes.draw do
-  get "users/new"
+  resources :users
+  resources :lessons
 
   match '/signup',  :to => 'users#new'
   match '/contact', :to => 'pages#contact'
@@ -9,7 +10,6 @@ Demo::Application.routes.draw do
   root :to => 'pages#home'
 
 
-  resources :lessons
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
