@@ -19,6 +19,25 @@ describe User do
     no_name_user.should_not be_valid
   end
   
+  it "should require a mailable attribute" do
+    no_mailalbe_user = User.new({
+                                  :name => "Example User",
+                                  :email => "user@example.com",
+                                  :password => "foobar",
+                                  :password_confirmation => "foobar"})
+    no_mailalbe_user.should_not be_valid
+  end
+  
+  it "should accept a true mailable attribute" do
+    true_mailalbe_user = User.new(@attr.merge(:mailalbe => true))
+    true_mailalbe_user.should be_valid
+  end
+  
+  it "should accept a false mailable attribute" do
+    true_mailalbe_user = User.new(@attr.merge(:mailalbe => false))
+    true_mailalbe_user.should be_valid
+  end
+  
   it "should require an email" do
     no_email_user = User.new(@attr.merge(:email => ""))
     no_email_user.should_not be_valid
@@ -110,6 +129,26 @@ describe User do
     
      end
     
+  end
+
+  describe "admin attribute" do
+
+    before(:each) do
+      @user = User.create!(@attr)
+    end
+
+    it "should respond to admin" do
+      @user.should respond_to(:admin)
+    end
+
+    it "should not be an admin by default" do
+      @user.should_not be_admin
+    end
+
+    it "should be convertible to an admin" do
+      @user.toggle!(:admin)
+      @user.should be_admin
+    end
   end
     
 end

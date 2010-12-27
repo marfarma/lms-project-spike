@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
                     :format      => { :with => email_regex },
                     :uniqueness  => { :case_sensitive => false }
   
-  validates :mailable, :presence => true
+  validates_inclusion_of :mailable, :in => [true, false]
   
   # Automatically create the virtual attribute 'password_confirmation'.
   validates :password, :presence     => true,
